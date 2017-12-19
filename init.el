@@ -14,41 +14,28 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package evil
-  :ensure t
-  :config
-  (use-package evil-leader
-    :ensure t
-    :config
-    (evil-leader/set-leader "<SPC>")
-    (global-evil-leader-mode))
 
-  (use-package evil-jumper
-    :ensure t
-    :config
-    (global-evil-jumper-mode))
+(defconst user-init-dir
+  (cond ((boundp 'user-emacs-directory)
+         user-emacs-directory)
+        ((boundp 'user-init-directory)
+         user-init-directory)
+        (t "~/.emacs.d/")))
 
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode))
 
-  (use-package evil-indent-textobject
-    :ensure t)
+(defun load-user-file (file)
+  (interactive "f")
+  "Load a file in current user's configuration directory"
+  (load-file (expand-file-name file user-init-dir)))
 
-  (use-package evil-magit
-    :ensure t)
-
-  (use-package evil-matchit
-    :ensure t)
-
-  (use-package evil-nerd-commenter
-    :ensure t)
-
-  (evil-mode 1)
-  )
+;; Load Helm
 (use-package helm
   :ensure t)
+
+;; Load Evil
+(load-user-file "evil.el")
+
+;; Load magit
 (use-package magit
   :ensure t)
 
