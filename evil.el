@@ -46,6 +46,9 @@
   (use-package evil-visual-mark-mode
     :ensure t)
 
+  (use-package org-evil
+    :ensure t)
+
   (define-key evil-normal-state-map [escape] 'keyboard-quit)
   (define-key evil-visual-state-map [escape] 'keyboard-quit)
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
