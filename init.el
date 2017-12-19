@@ -28,9 +28,10 @@
   "Load a file in current user's configuration directory"
   (load-file (expand-file-name file user-init-dir)))
 
+(load-user-file "appearance.el")
+
 ;; Load Helm
-(use-package helm
-  :ensure t)
+(load-user-file "helm.el")
 
 ;; Load Evil
 (load-user-file "evil.el")
