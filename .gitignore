@@ -1,3 +1,4 @@
 #Ignore the downloaded packages
 elpa/
 url/
+history
