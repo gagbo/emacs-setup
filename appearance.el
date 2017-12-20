@@ -8,7 +8,6 @@
 (setq ring-bell-function 'ignore)
 (display-time-mode t)
 
-; Get rid of the butt ugly OSX scrollbars in GUI
 (when (display-graphic-p) (set-scroll-bar-mode nil))
 
 (use-package powerline
