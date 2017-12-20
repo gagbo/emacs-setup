@@ -1,8 +1,7 @@
 (use-package evil
   :ensure t
   :config
-  (evil-mode 1)
-
+  (evil-mode 1) 
   (use-package evil-leader
     :ensure t
     :config

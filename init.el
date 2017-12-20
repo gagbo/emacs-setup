@@ -29,6 +29,7 @@
   "Load a file in current user's configuration directory"
   (load-file (expand-file-name file user-init-dir)))
 
+;; General purpose options
 (savehist-mode 1)
 (setq inhibit-startup-message t)
 (setq-default indent-tabs-mode nil)
