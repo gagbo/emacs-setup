@@ -9,6 +9,7 @@
     (evil-leader/set-leader "<SPC>")
     (evil-leader/set-key
       "e" 'helm-find-file
+      "pf" 'helm-projectile
       "bd" 'kill-buffer-and-window
       "gs" 'magit-status
       "ne" 'flycheck-next-error
@@ -52,4 +53,5 @@
   (define-key evil-visual-state-map [escape] 'keyboard-quit)
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
   (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
+  (define-key evil-ex-map "term" 'ansi-term )
   )
