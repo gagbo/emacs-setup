@@ -4,6 +4,7 @@
 (scroll-bar-mode -1)
 
 (column-number-mode t)
+(line-number-mode t)
 
 (setq ring-bell-function 'ignore)
 (display-time-mode t)
