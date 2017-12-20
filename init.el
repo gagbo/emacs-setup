@@ -31,6 +31,8 @@
 (savehist-mode 1)
 (setq inhibit-startup-message t)
 (setq-default indent-tabs-mode nil)
+(setq-default scroll-step 5)
+(setq-default scroll-conservatively 25)
 
 ;; Appearance related stuff
 (load-user-file "appearance.el")
@@ -54,7 +56,7 @@
 (use-package clang-format
   :ensure t
   :config
-  (global-set-key [F10] 'clang-format-region)
+  (global-set-key [M-=] 'clang-format-region)
   )
 
 (use-package cc-mode
@@ -78,11 +80,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote use-package)))
+ '(custom-safe-themes
+   (quote
+    ("d494af9adbd2c04bec4b5c414983fefe665cd5dadc5e5c79fd658a17165e435a" default)))
+ '(package-selected-packages
+   (quote
+    (use-package underwater-theme seoul256-theme projectile powerline-evil org-evil helm flycheck-color-mode-line evil-visual-mark-mode evil-tutor evil-surround evil-nerd-commenter evil-matchit evil-magit evil-lion evil-leader evil-indent-textobject evil-commentary elpy clang-format))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(setq c-default-style "k&r")

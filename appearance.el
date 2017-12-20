@@ -16,12 +16,12 @@
   :config
   (use-package powerline-evil
     :ensure t)
-  (powerline-center-evil-theme))
+  (powerline-vim-theme))
 
 (use-package flycheck-color-mode-line
   :ensure t
   :config
   (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
 
-(use-package underwater-theme
-             :ensure t)
+(use-package seoul256-theme
+  :ensure t)
