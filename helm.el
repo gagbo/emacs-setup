@@ -1,7 +1,7 @@
 (use-package helm
   :ensure t
   :init
-  (setq helm-autoresize-max-height 0)
+  (setq helm-autoresize-max-height 50)
   (setq helm-autoresize-min-height 20)
   :config
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
