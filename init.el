@@ -45,25 +45,40 @@
 ;; Load Evil
 (load-user-file "evil.el")
 
-;; Load magit
+;; Load Magit
 (use-package magit
   :ensure t
   :config
   (use-package evil-magit
     :ensure t))
 
+;; Load Projectile
 (use-package projectile
-  :ensure t)
+  :ensure t
+  :config
+  (projectile-mode 1)
+  (use-package helm-projectile
+    :ensure t
+    :config
+    (helm-projectile-on)
+    )
+  )
 
+;; Load Clang-Format
 (use-package clang-format
   :ensure t
   :config
+  (require 'clang-format)
   (global-set-key [M-=] 'clang-format-region)
   )
 
+;; Load CcMode
 (use-package cc-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq c-basic-offset 4))
 
+;; Load Elpy
 (use-package elpy
   :ensure t
   :config
