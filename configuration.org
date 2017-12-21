@@ -245,6 +245,11 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 
 * The rest
 ** RTags
+There are a few tricks to integrate rtags properly into evil. Most notably,
+=rtags-find-{symbol,references}-at-point= are made "jumps" so evil adds properly
+the points to the jump list for easy navigation.
+
+Also new mappings are added on =gt= and =gT= for tags/references navigation.
 #+BEGIN_SRC emacs-lisp
 (use-package rtags
   :ensure t
@@ -252,6 +257,9 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
   (setq rtags-completion-enabled t)
   (setq rtags-use-helm t)
   )
+
+(evil-add-command-properties 'rtags-find-symbol-at-point :jump t)
+(evil-add-command-properties 'rtags-find-references-at-point :jump t)
 
 (add-hook 'c-mode-common-hook (lambda()
   (define-key evil-normal-state-map (kbd "gt") 'rtags-find-symbol-at-point)))
