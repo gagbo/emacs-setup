@@ -264,8 +264,10 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 (use-package company
   :ensure t
   :config
+  (setq company-idle-time 0.2)
   (add-hook 'after-init-hook 'global-company-mode)
   (setq company-backends (delete 'company-semantic company-backends))
+  (add-to-list 'company-backends 'company-rtags)
   )
 #+END_SRC
 
