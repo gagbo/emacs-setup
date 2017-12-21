@@ -92,7 +92,20 @@
 (use-package cc-mode
   :ensure t
   :config
-  (setq c-basic-offset 4))
+  (setq c-basic-offset 4)
+  (use-package rtags
+    :ensure t)
+  ;; Try Cmake-ide
+  (use-package cmake-ide
+    :ensure t
+    :config
+    (setq cmake-ide-flags-c '("-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
+    (setq cmake-ide-flags-c++ '("-I/usr/include/c++/7" "-I/usr/include/c++/7/x86_64-redhat-linux" "-I/usr/include/c++/7/backward" "-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
+    (cmake-ide-setup)
+    )
+  (define-key c-mode-map  [(tab)] 'company-complete)
+  (define-key c++-mode-map  [(tab)] 'company-complete)
+  )
 
 ;; Load Elpy
 (use-package elpy
