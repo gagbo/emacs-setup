@@ -14,6 +14,10 @@
       "gs" 'magit-status
       "ne" 'flycheck-next-error
       "pe" 'flycheck-previous-error
+      "ol" 'org-store-link
+      "oa" 'org-agenda
+      "oc" 'org-capture
+      "ob" 'org-iswitchb
       )
     )
 
