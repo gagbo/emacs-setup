@@ -15,7 +15,9 @@
   (define-key helm-map (kbd "C-l") (kbd "RET"))
   (define-key helm-map [escape] 'helm-keyboard-quit)
   (define-key evil-ex-map "b " 'helm-mini)
+  (define-key evil-ex-map "spb " 'helm-mini-other-window)
   (define-key evil-ex-map "e " 'helm-find-files)
+  (define-key evil-ex-map "sp " 'helm-find-files-other-window)
 
   (helm-mode 1)
   )
