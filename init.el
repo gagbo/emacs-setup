@@ -117,7 +117,7 @@
   (elpy-use-cpython "/usr/bin/python3")
   (setq python-check-command "/usr/bin/pyflakes-3")
   (add-hook 'python-mode-hook (
-            lambda () (show-paren-mode 1))
+                               lambda () (show-paren-mode 1))
             )
   )
 
