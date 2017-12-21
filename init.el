@@ -47,6 +47,20 @@
 ;; Load Evil
 (load-user-file "evil.el")
 
+;; Load Completion
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-backends (delete 'company-semantic company-backends))
+  )
+
+;; Load Flycheck
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode))
+
 ;; Load Magit
 (use-package magit
   :ensure t
