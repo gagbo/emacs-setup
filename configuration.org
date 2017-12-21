@@ -244,6 +244,21 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 #+END_SRC
 
 * The rest
+** RTags
+#+BEGIN_SRC emacs-lisp
+(use-package rtags
+  :ensure t
+  :config
+  (setq rtags-completion-enabled t)
+  (setq rtags-use-helm t)
+  )
+
+(add-hook 'c-mode-common-hook (lambda()
+  (define-key evil-normal-state-map (kbd "gt") 'rtags-find-symbol-at-point)))
+(add-hook 'c-mode-common-hook (lambda()
+  (define-key evil-normal-state-map (kbd "gT") 'rtags-find-references-at-point)))
+#+END_SRC
+
 ** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
@@ -259,7 +274,22 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 (use-package flycheck
   :ensure t
   :config
+  (use-package flycheck-rtags
+    :ensure t)
+  (use-package flycheck-clangcheck
+    :ensure t)
+  (use-package flycheck-rust
+    :ensure t)
+  (use-package flycheck-pyflakes
+    :ensure t)
   (global-flycheck-mode))
+
+(defun gagbo/flycheck-rtags-setup ()
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil)
+  (setq-local flycheck-check-syntax-automatically nil))
+
+(add-hook 'c-mode-common-hook 'gagbo/flycheck-rtags-setup)
 #+END_SRC
 
 ** Magit
@@ -301,8 +331,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
   :ensure t
   :config
   (setq c-basic-offset 4)
-  (use-package rtags
-    :ensure t)
   ;; Try Cmake-ide
   (use-package cmake-ide
     :ensure t
