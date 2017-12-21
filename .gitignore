@@ -1,5 +1,5 @@
-#Ignore the downloaded packages
-elpa/
-url/
-history
-/recentf
+#Ignore everything except what matters
+*
+!init.el
+!configuration.org
+!snippets

@@ -7,15 +7,6 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package)
-  (require 'cl))
-
-
 (defconst user-init-dir
   (cond ((boundp 'user-emacs-directory)
          user-emacs-directory)
@@ -23,106 +14,7 @@
          user-init-directory)
         (t "~/.emacs.d/")))
 
-
-(defun load-user-file (file)
-  (interactive "f")
-  "Load a file in current user's configuration directory"
-  (load-file (expand-file-name file user-init-dir)))
-
-;; General purpose options
-(savehist-mode 1)
-(setq inhibit-startup-message t)
-(setq-default indent-tabs-mode nil)
-(setq-default scroll-step 5)
-(setq-default scroll-conservatively 25)
-(setq backup-directory-alist '(("." . "~/.local/share/emacs/saves")))
-(setq-default dired-listing-switches "-alh")
-
-;; Appearance related stuff
-(load-user-file "appearance.el")
-
-;; Load Helm
-(load-user-file "helm.el")
-
-;; Load Evil
-(load-user-file "evil.el")
-
-;; Load Completion
-(use-package company
-  :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-backends (delete 'company-semantic company-backends))
-  )
-
-;; Load Flycheck
-(use-package flycheck
-  :ensure t
-  :config
-  (global-flycheck-mode))
-
-;; Load Magit
-(use-package magit
-  :ensure t
-  :config
-  (use-package evil-magit
-    :ensure t))
-
-;; Load Projectile
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode 1)
-  (use-package helm-projectile
-    :ensure t
-    :config
-    (helm-projectile-on)
-    )
-  )
-
-;; Load Clang-Format
-(use-package clang-format
-  :ensure t
-  :config
-  (require 'clang-format)
-  (global-set-key [M-=] 'clang-format-region)
-  )
-
-;; Load CcMode
-(use-package cc-mode
-  :ensure t
-  :config
-  (setq c-basic-offset 4)
-  (use-package rtags
-    :ensure t)
-  ;; Try Cmake-ide
-  (use-package cmake-ide
-    :ensure t
-    :config
-    (setq cmake-ide-flags-c '("-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
-    (setq cmake-ide-flags-c++ '("-I/usr/include/c++/7" "-I/usr/include/c++/7/x86_64-redhat-linux" "-I/usr/include/c++/7/backward" "-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
-    (cmake-ide-setup)
-    )
-  (define-key c-mode-map  [(tab)] 'company-complete)
-  (define-key c++-mode-map  [(tab)] 'company-complete)
-  )
-
-;; Load Elpy
-(use-package elpy
-  :ensure t
-  :config
-  (elpy-enable)
-  (setq elpy-rpc-python-command "python3")
-  (setq elpy-rpc-backend "jedi")
-  (elpy-use-cpython "/usr/bin/python3")
-  (setq python-check-command "/usr/bin/pyflakes-3")
-  (add-hook 'python-mode-hook (
-                               lambda () (show-paren-mode 1))
-            )
-  )
-
-(use-package sml-mode
-  :ensure t)
+(org-babel-load-file (expand-file-name "configuration.org" user-init-dir))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

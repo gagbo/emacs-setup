@@ -1,0 +1,243 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Gerry Agbobada
+#+EMAIL: gagbobada+git@gmail.com
+#+OPTIONS: toc:nil num:nil
+
+* Use-package init
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package)
+  (require 'cl))
+
+#+END_SRC
+
+* Defaults
+
+#+BEGIN_SRC emacs-lisp
+(savehist-mode 1)
+(setq inhibit-startup-message t)
+(setq-default indent-tabs-mode nil)
+(setq-default scroll-step 5)
+(setq-default scroll-conservatively 25)
+(setq backup-directory-alist '(("." . "~/.local/share/emacs/saves")))
+(setq-default dired-listing-switches "-alh")
+#+END_SRC
+
+* Appearance.el
+
+#+BEGIN_SRC emacs-lisp
+; No toolbar
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(column-number-mode t)
+(line-number-mode t)
+
+(setq ring-bell-function 'ignore)
+(display-time-mode t)
+
+(when (display-graphic-p) (set-scroll-bar-mode nil))
+
+(use-package powerline
+  :ensure t
+  :config
+  (use-package powerline-evil
+    :ensure t)
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+    (spaceline-spacemacs-theme)
+    (spaceline-helm-mode)
+    (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+    ))
+
+(use-package flycheck-color-mode-line
+  :ensure t
+  :config
+  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+
+(use-package seoul256-theme
+  :ensure t)
+
+#+END_SRC
+
+* Helm.el
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm
+  :ensure t
+  :init
+  (setq helm-autoresize-max-height 50)
+  (setq helm-autoresize-min-height 20)
+  :config
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z")  'helm-select-action)
+  (helm-autoresize-mode 1)
+  (define-key helm-map (kbd "C-j") 'helm-next-line)
+  (define-key helm-map (kbd "C-k") 'helm-previous-line)
+  (define-key helm-map (kbd "C-h") 'helm-next-source)
+  (define-key helm-map (kbd "C-S-h") 'describe-key)
+  (define-key helm-map (kbd "C-l") (kbd "RET"))
+  (define-key helm-map [escape] 'helm-keyboard-quit)
+  (define-key evil-ex-map "b " 'helm-mini)
+  (define-key evil-ex-map "spb " 'helm-mini-other-window)
+  (define-key evil-ex-map "e " 'helm-find-files)
+  (define-key evil-ex-map "sp " 'helm-find-files-other-window)
+
+  (helm-mode 1)
+  )
+#+END_SRC
+
+* Evil.el
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1) 
+  (use-package evil-leader
+    :ensure t
+    :config
+    (global-evil-leader-mode)
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key
+      "e" 'helm-find-file
+      "pf" 'helm-projectile
+      "bd" 'kill-buffer-and-window
+      "gs" 'magit-status
+      "ne" 'flycheck-next-error
+      "pe" 'flycheck-previous-error
+      "ol" 'org-store-link
+      "oa" 'org-agenda
+      "oc" 'org-capture
+      "ob" 'org-iswitchb
+      )
+    )
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode))
+
+  (use-package evil-indent-textobject
+    :ensure t)
+
+  (use-package evil-magit
+    :ensure t)
+
+  (use-package evil-matchit
+    :ensure t)
+
+  (use-package evil-nerd-commenter
+    :ensure t)
+
+  (use-package evil-commentary
+    :ensure t)
+
+  (use-package evil-lion
+    :ensure t)
+
+  (use-package evil-tutor
+    :ensure t)
+
+  (use-package evil-visual-mark-mode
+    :ensure t)
+
+  (use-package org-evil
+    :ensure t)
+
+  (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+  (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
+  (define-key evil-ex-map "term" 'ansi-term )
+  )
+
+#+END_SRC
+
+* The rest
+#+BEGIN_SRC emacs-lisp
+;; Load Completion
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-backends (delete 'company-semantic company-backends))
+  )
+
+;; Load Flycheck
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode))
+
+;; Load Magit
+(use-package magit
+  :ensure t
+  :config
+  (use-package evil-magit
+    :ensure t))
+
+;; Load Projectile
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode 1)
+  (use-package helm-projectile
+    :ensure t
+    :config
+    (helm-projectile-on)
+    )
+  )
+
+;; Load Clang-Format
+(use-package clang-format
+  :ensure t
+  :config
+  (require 'clang-format)
+  (global-set-key [M-=] 'clang-format-region)
+  )
+
+;; Load CcMode
+(use-package cc-mode
+  :ensure t
+  :config
+  (setq c-basic-offset 4)
+  (use-package rtags
+    :ensure t)
+  ;; Try Cmake-ide
+  (use-package cmake-ide
+    :ensure t
+    :config
+    (setq cmake-ide-flags-c '("-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
+    (setq cmake-ide-flags-c++ '("-I/usr/include/c++/7" "-I/usr/include/c++/7/x86_64-redhat-linux" "-I/usr/include/c++/7/backward" "-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
+    (cmake-ide-setup)
+    )
+  (define-key c-mode-map  [(tab)] 'company-complete)
+  (define-key c++-mode-map  [(tab)] 'company-complete)
+  )
+
+;; Load Elpy
+(use-package elpy
+  :ensure t
+  :config
+  (elpy-enable)
+  (setq elpy-rpc-python-command "python3")
+  (setq elpy-rpc-backend "jedi")
+  (elpy-use-cpython "/usr/bin/python3")
+  (setq python-check-command "/usr/bin/pyflakes-3")
+  (add-hook 'python-mode-hook (
+                               lambda () (show-paren-mode 1))
+            )
+  )
+
+(use-package sml-mode
+  :ensure t)
+#+END_SRC
