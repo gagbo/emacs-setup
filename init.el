@@ -35,6 +35,8 @@
 (setq-default indent-tabs-mode nil)
 (setq-default scroll-step 5)
 (setq-default scroll-conservatively 25)
+(setq backup-directory-alist '(("." . "~/.local/share/emacs/saves")))
+(setq-default dired-listing-switches "-alh")
 
 ;; Appearance related stuff
 (load-user-file "appearance.el")
