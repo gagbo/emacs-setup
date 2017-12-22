@@ -119,10 +119,16 @@ Enable the flycheck modifier of modeline
 
 ** Theme
 Use the Seoul256 theme
-
 #+BEGIN_SRC emacs-lisp
 (use-package seoul256-theme
   :ensure t)
+#+END_SRC
+
+Also, set the selection line in Helm in black over light gold :
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'helm-selection nil
+                    :background "light goldenrod"
+                    :foreground "black" )
 #+END_SRC
 
 * Helm settings
