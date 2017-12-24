@@ -185,7 +185,7 @@ Also, set the selection line in Helm in black over light gold :
 
 * Evil Mode
 ** TODO separate the big package call into functions and smaller blocks
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
   :config
@@ -244,11 +244,20 @@ Also, set the selection line in Helm in black over light gold :
 
   (define-key evil-normal-state-map [escape] 'keyboard-quit)
   (define-key evil-visual-state-map [escape] 'keyboard-quit)
-  (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-  (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
   (define-key evil-ex-map "term" 'ansi-term )
   )
-#+END_SRC
+   #+END_SRC
+
+** Exchange the roles of : and ;
+   Command : is used more often and needs shift naturally
+   #+BEGIN_SRC emacs-lisp
+     (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+     (define-key evil-normal-state-map (kbd ":") 'evil-repeat-find-char)
+     (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+     (define-key evil-motion-state-map (kbd ":") 'evil-repeat-find-char)
+     (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+     (define-key evil-visual-state-map (kbd ":") 'evil-repeat-find-char)
+   #+END_SRC
 
 * The rest
 ** RTags
