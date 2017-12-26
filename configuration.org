@@ -30,6 +30,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package diminish
        :ensure t
+       :config
+       (diminish 'abbrev-mode)
+       (diminish 'undo-tree-mode)
+       (diminish 'auto-revert-mode)
      )
    #+END_SRC
 
@@ -158,6 +162,7 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 ** Mappings
    #+BEGIN_SRC emacs-lisp
      (use-package helm
+       :diminish helm-mode
        :ensure t
        :init
        (setq helm-autoresize-max-height 50)
@@ -340,6 +345,7 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 ** Projectile
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
+       :diminish projectile-mode "Prj"
        :ensure t
        :config
        (projectile-mode 1)
