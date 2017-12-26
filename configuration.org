@@ -132,15 +132,14 @@
    #+END_SRC
 
 ** Theme
-   Use the Seoul256 theme
-   #+BEGIN_SRC emacs-lisp
-     (use-package seoul256-theme
-       :ensure t)
-   #+END_SRC
-
    Set custom theme directory in order to replicate Iceberg
    #+BEGIN_SRC emacs-lisp
      (setq custom-theme-directory "~/.emacs.d/resources/themes")
+   #+END_SRC
+
+   Use the local iceberg theme
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'iceberg)
    #+END_SRC
 
 * Helm settings

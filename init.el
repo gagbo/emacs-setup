@@ -15,7 +15,6 @@
         (t "~/.emacs.d/")))
 
 (org-babel-load-file (expand-file-name "configuration.org" user-init-dir))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -23,10 +22,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d494af9adbd2c04bec4b5c414983fefe665cd5dadc5e5c79fd658a17165e435a" default)))
- '(package-selected-packages
-   (quote
-    (use-package underwater-theme seoul256-theme projectile powerline-evil org-evil helm flycheck-color-mode-line evil-visual-mark-mode evil-tutor evil-surround evil-nerd-commenter evil-matchit evil-magit evil-lion evil-leader evil-indent-textobject evil-commentary elpy clang-format))))
+    ("2be7b995600f50c87277940db406d4b7e6ad3ed6dc7a8a91686939a3b50cc56a" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
