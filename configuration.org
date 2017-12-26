@@ -4,134 +4,144 @@
 #+OPTIONS: toc:nil num:nil
 
 * Set personal information
-Define some variables that may be useful later
-#+BEGIN_SRC emacs-lisp
-(setq user-full-name "Gerry Agbobada"
-      user-mail-address "gagbobada+git@gmail.com")
-#+END_SRC
+  Define some variables that may be useful later
+  #+BEGIN_SRC emacs-lisp
+    (setq user-full-name "Gerry Agbobada"
+          user-mail-address "gagbobada+git@gmail.com")
+  #+END_SRC
 
-* Use-package init
-Initialise the =use-package= package that we'll use from here on
+* Main initialisation
+** Use-package
+   Initialise the =use-package= package that we'll use from here on
 
-#+BEGIN_SRC emacs-lisp
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+   #+BEGIN_SRC emacs-lisp
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package)
-  (require 'cl))
-#+END_SRC
+     (eval-when-compile
+       (require 'use-package)
+       (require 'cl))
+   #+END_SRC
+
+** Diminish
+   Reduces the clutter in the modeline. It is loaded early because use-package
+   supports diminish in its command.
+   #+BEGIN_SRC emacs-lisp
+     (use-package diminish
+       :ensure t
+     )
+   #+END_SRC
 
 * Defaults
-These options set :
+  These options set :
 - the inhibition of the startup message
 - the use of space for indent
 - the backup behaviour (with a unique folder)
 - useful flags for dired
 
 #+BEGIN_SRC emacs-lisp
-(savehist-mode 1)
-(setq inhibit-default-init t
-      inhibit-startup-message t)
-(setq-default indent-tabs-mode nil)
-(setq-default scroll-step 5
-              scroll-conservatively 25)
-(setq backup-directory-alist '(("." . "~/.local/share/emacs/saves")))
-(setq-default dired-listing-switches "-alh")
+  (savehist-mode 1)
+  (setq inhibit-default-init t
+        inhibit-startup-message t)
+  (setq-default indent-tabs-mode nil)
+  (setq-default scroll-step 5
+                scroll-conservatively 25)
+  (setq backup-directory-alist '(("." . "~/.local/share/emacs/saves")))
+  (setq-default dired-listing-switches "-alh")
 #+END_SRC
 
 ** Remove the trailing whitespaces on save
-#+BEGIN_SRC emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'before-save-hook 'delete-trailing-whitespace)
+   #+END_SRC
 
 * Appearance // UI
 ** Display line number
-#+BEGIN_SRC emacs-lisp
-(global-linum-mode t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (global-linum-mode t)
+   #+END_SRC
 
 ** Enable coloration in Org-mode
-#+BEGIN_SRC emacs-lisp
-(setq org-src-fontify-natively t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq org-src-fontify-natively t)
+   #+END_SRC
 
 ** Set Frame title
 
-#+BEGIN_SRC emacs-lisp
-(setq-default frame-title-format '(multiple-frames "%b"
-                              ("" invocation-name "@" system-name " ")
-                              (:eval (projectile-project-name))))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq-default frame-title-format '(multiple-frames "%b"
+                                   ("" invocation-name "@" system-name " ")
+                                   (:eval (projectile-project-name))))
+   #+END_SRC
 
 ** No toolbar
 
-#+BEGIN_SRC emacs-lisp
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+   #+BEGIN_SRC emacs-lisp
+     (tool-bar-mode -1)
+     (menu-bar-mode -1)
+     (scroll-bar-mode -1)
 
-(when (display-graphic-p) (set-scroll-bar-mode nil))
-#+END_SRC
+     (when (display-graphic-p) (set-scroll-bar-mode nil))
+   #+END_SRC
 
 ** Modeline tweaks
-Activate column and line number in the modeline, as well as time
-#+BEGIN_SRC emacs-lisp
-(column-number-mode t)
-(line-number-mode t)
-(display-time-mode t)
-#+END_SRC
+   Activate column and line number in the modeline, as well as time
+   #+BEGIN_SRC emacs-lisp
+     (column-number-mode t)
+     (line-number-mode t)
+     (display-time-mode t)
+   #+END_SRC
 
 ** Deactivate entirely the bell
-#+BEGIN_SRC emacs-lisp
-(setq ring-bell-function 'ignore)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq ring-bell-function 'ignore)
+   #+END_SRC
 
 ** Powerline
-Use the powerline package.
+   Use the powerline package.
 *** TODO Manage the flickering with auto-collape
-#+BEGIN_SRC emacs-lisp
-(use-package powerline
-  :ensure t
-  :config
-  (use-package powerline-evil
-    :ensure t)
-  (use-package spaceline
-    :ensure t
-    :config
-    (require 'spaceline-config)
-    (spaceline-spacemacs-theme)
-    (spaceline-helm-mode)
-    (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
-  )
-#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (use-package powerline
+        :ensure t
+        :config
+        (use-package powerline-evil
+          :ensure t)
+        (use-package spaceline
+          :ensure t
+          :config
+          (require 'spaceline-config)
+          (spaceline-spacemacs-theme)
+          (spaceline-helm-mode)
+          (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+        )
+    #+END_SRC
 
 ** Flycheck
-Enable the flycheck modifier of modeline
+   Enable the flycheck modifier of modeline
 
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck-color-mode-line
-  :ensure t
-  :config
-  (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck-color-mode-line
+       :ensure t
+       :config
+       (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+   #+END_SRC
 
 ** Theme
-Use the Seoul256 theme
-#+BEGIN_SRC emacs-lisp
-(use-package seoul256-theme
-  :ensure t)
-#+END_SRC
+   Use the Seoul256 theme
+   #+BEGIN_SRC emacs-lisp
+     (use-package seoul256-theme
+       :ensure t)
+   #+END_SRC
 
 * Helm settings
 ** TODO Emulate :ls :split b using helm-mini
-The function =helm-mini-other-window= does not exist, so we should create
-it to add a mapping to evil-ex ="spb "=
+   The function =helm-mini-other-window= does not exist, so we should create
+   it to add a mapping to evil-ex ="spb "=
 
 ** Fuzzy match reminder
-The documentation here comes from the [[https://github.com/emacs-helm/helm/wiki/Fuzzy-matching][wiki]], it has not been
-tested
+   The documentation here comes from the [[https://github.com/emacs-helm/helm/wiki/Fuzzy-matching][wiki]], it has not been
+   tested
 - =helm-recentf= \rightarrow =helm-recentf-fuzzy-match=
 - =helm-mini= \rightarrow =helm-buffers-fuzzy-matching= =helm-recentf-fuzzy-match=
 - =helm-buffers-list= \rightarrow =helm-buffers-fuzzy-matching=
@@ -146,106 +156,106 @@ tested
 If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 
 ** Mappings
-#+BEGIN_SRC emacs-lisp
-(use-package helm
-  :ensure t
-  :init
-  (setq helm-autoresize-max-height 50)
-  (setq helm-autoresize-min-height 20)
-  (setq helm-completion-in-region-fuzzy-match t
-        helm-mode-fuzzy-match t)
-  :config
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z")  'helm-select-action)
-  (helm-autoresize-mode 1)
-  (define-key helm-map (kbd "C-j") 'helm-next-line)
-  (define-key helm-map (kbd "C-k") 'helm-previous-line)
-  (define-key helm-map (kbd "C-h") 'helm-next-source)
-  (define-key helm-map (kbd "C-S-h") 'describe-key)
-  (define-key helm-map (kbd "C-l") (kbd "RET"))
-  (define-key helm-map [escape] 'helm-keyboard-quit)
-  (define-key evil-ex-map "b " 'helm-mini)
-  ;;(define-key evil-ex-map "spb " 'helm-mini-other-window)
-  (define-key evil-ex-map "e " 'helm-find-files)
-  (define-key evil-ex-map "sp " 'helm-find-files-other-window)
-  (global-set-key (kbd "M-x") 'helm-M-x)
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm
+       :ensure t
+       :init
+       (setq helm-autoresize-max-height 50)
+       (setq helm-autoresize-min-height 20)
+       (setq helm-completion-in-region-fuzzy-match t
+             helm-mode-fuzzy-match t)
+       :config
+       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+       (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+       (define-key helm-map (kbd "C-z")  'helm-select-action)
+       (helm-autoresize-mode 1)
+       (define-key helm-map (kbd "C-j") 'helm-next-line)
+       (define-key helm-map (kbd "C-k") 'helm-previous-line)
+       (define-key helm-map (kbd "C-h") 'helm-next-source)
+       (define-key helm-map (kbd "C-S-h") 'describe-key)
+       (define-key helm-map (kbd "C-l") (kbd "RET"))
+       (define-key helm-map [escape] 'helm-keyboard-quit)
+       (define-key evil-ex-map "b " 'helm-mini)
+       ;;(define-key evil-ex-map "spb " 'helm-mini-other-window)
+       (define-key evil-ex-map "e " 'helm-find-files)
+       (define-key evil-ex-map "sp " 'helm-find-files-other-window)
+       (global-set-key (kbd "M-x") 'helm-M-x)
 
-  (helm-mode 1)
-  )
-#+END_SRC
+       (helm-mode 1)
+       )
+   #+END_SRC
 
 ** Appearance
-Also, set the selection line in Helm in black over light gold :
-#+BEGIN_SRC emacs-lisp
-(set-face-attribute 'helm-selection nil
-                    :background "light goldenrod"
-                    :foreground "black" )
-#+END_SRC
+   Also, set the selection line in Helm in black over light gold :
+   #+BEGIN_SRC emacs-lisp
+     (set-face-attribute 'helm-selection nil
+                         :background "light goldenrod"
+                         :foreground "black" )
+   #+END_SRC
 
 * Evil Mode
 ** TODO separate the big package call into functions and smaller blocks
    #+BEGIN_SRC emacs-lisp
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1)
-  (use-package evil-leader
-    :ensure t
-    :config
-    (global-evil-leader-mode)
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key
-      "e" 'projectile-find-file
-      "x" 'helm-M-x
-      "pf" 'helm-projectile
-      "bd" 'kill-buffer-and-window
-      "gs" 'magit-status
-      "ne" 'flycheck-next-error
-      "pe" 'flycheck-previous-error
-      "ol" 'org-store-link
-      "oa" 'org-agenda
-      "oc" 'org-capture
-      "ob" 'org-iswitchb
-      )
-    )
+     (use-package evil
+       :ensure t
+       :config
+       (evil-mode 1)
+       (use-package evil-leader
+         :ensure t
+         :config
+         (global-evil-leader-mode)
+         (evil-leader/set-leader "<SPC>")
+         (evil-leader/set-key
+           "e" 'projectile-find-file
+           "x" 'helm-M-x
+           "pf" 'helm-projectile
+           "bd" 'kill-buffer-and-window
+           "gs" 'magit-status
+           "ne" 'flycheck-next-error
+           "pe" 'flycheck-previous-error
+           "ol" 'org-store-link
+           "oa" 'org-agenda
+           "oc" 'org-capture
+           "ob" 'org-iswitchb
+           )
+         )
 
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode))
+       (use-package evil-surround
+         :ensure t
+         :config
+         (global-evil-surround-mode))
 
-  (use-package evil-indent-textobject
-    :ensure t)
+       (use-package evil-indent-textobject
+         :ensure t)
 
-  (use-package evil-magit
-    :ensure t)
+       (use-package evil-magit
+         :ensure t)
 
-  (use-package evil-matchit
-    :ensure t)
+       (use-package evil-matchit
+         :ensure t)
 
-  (use-package evil-nerd-commenter
-    :ensure t)
+       (use-package evil-nerd-commenter
+         :ensure t)
 
-  (use-package evil-commentary
-    :ensure t)
+       (use-package evil-commentary
+         :ensure t)
 
-  (use-package evil-lion
-    :ensure t)
+       (use-package evil-lion
+         :ensure t)
 
-  (use-package evil-tutor
-    :ensure t)
+       (use-package evil-tutor
+         :ensure t)
 
-  (use-package evil-visual-mark-mode
-    :ensure t)
+       (use-package evil-visual-mark-mode
+         :ensure t)
 
-  (use-package org-evil
-    :ensure t)
+       (use-package org-evil
+         :ensure t)
 
-  (define-key evil-normal-state-map [escape] 'keyboard-quit)
-  (define-key evil-visual-state-map [escape] 'keyboard-quit)
-  (define-key evil-ex-map "term" 'ansi-term )
-  )
+       (define-key evil-normal-state-map [escape] 'keyboard-quit)
+       (define-key evil-visual-state-map [escape] 'keyboard-quit)
+       (define-key evil-ex-map "term" 'ansi-term )
+       )
    #+END_SRC
 
 ** Exchange the roles of : and ;
@@ -261,130 +271,138 @@ Also, set the selection line in Helm in black over light gold :
 
 * The rest
 ** RTags
-There are a few tricks to integrate rtags properly into evil. Most notably,
-=rtags-find-{symbol,references}-at-point= are made "jumps" so evil adds properly
-the points to the jump list for easy navigation.
+   There are a few tricks to integrate rtags properly into evil. Most notably,
+   =rtags-find-{symbol,references}-at-point= are made "jumps" so evil adds properly
+   the points to the jump list for easy navigation.
 
-Also new mappings are added on =gt= and =gT= for tags/references navigation.
-#+BEGIN_SRC emacs-lisp
-(use-package rtags
-  :ensure t
-  :config
-  (setq rtags-completion-enabled t)
-  (setq rtags-use-helm t)
-  )
+   Also new mappings are added on =gt= and =gT= for tags/references navigation.
+   #+BEGIN_SRC emacs-lisp
+     (use-package rtags
+       :ensure t
+       :config
+       (setq rtags-completion-enabled t)
+       (setq rtags-use-helm t)
+       )
 
-(evil-add-command-properties 'rtags-find-symbol-at-point :jump t)
-(evil-add-command-properties 'rtags-find-references-at-point :jump t)
+     (evil-add-command-properties 'rtags-find-symbol-at-point :jump t)
+     (evil-add-command-properties 'rtags-find-references-at-point :jump t)
 
-(add-hook 'c-mode-common-hook (lambda()
-  (define-key evil-normal-state-map (kbd "gt") 'rtags-find-symbol-at-point)))
-(add-hook 'c-mode-common-hook (lambda()
-  (define-key evil-normal-state-map (kbd "gT") 'rtags-find-references-at-point)))
-#+END_SRC
+     (add-hook 'c-mode-common-hook (lambda()
+       (define-key evil-normal-state-map (kbd "gt") 'rtags-find-symbol-at-point)))
+     (add-hook 'c-mode-common-hook (lambda()
+       (define-key evil-normal-state-map (kbd "gT") 'rtags-find-references-at-point)))
+   #+END_SRC
 
 ** Company
-#+BEGIN_SRC emacs-lisp
-(use-package company
-  :ensure t
-  :config
-  (setq company-idle-time 0.2)
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-backends (delete 'company-semantic company-backends))
-  (add-to-list 'company-backends 'company-rtags)
-  )
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package company
+       :ensure t
+       :config
+       (setq company-idle-time 0.1)
+       (add-hook 'after-init-hook 'global-company-mode)
+       (setq company-backends (delete 'company-semantic company-backends))
+       (add-to-list 'company-backends 'company-rtags)
+       )
+   #+END_SRC
 
 ** Flycheck
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :ensure t
-  :config
-  (use-package flycheck-rtags
-    :ensure t)
-  (use-package flycheck-clangcheck
-    :ensure t)
-  (use-package flycheck-rust
-    :ensure t)
-  (use-package flycheck-pyflakes
-    :ensure t)
-  (global-flycheck-mode))
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :config
+       (use-package flycheck-rtags
+         :ensure t)
+       (use-package flycheck-clangcheck
+         :ensure t)
+       (use-package flycheck-rust
+         :ensure t)
+       (use-package flycheck-pyflakes
+         :ensure t)
+       (global-flycheck-mode))
 
-(defun gagbo/flycheck-rtags-setup ()
-  (flycheck-select-checker 'rtags)
-  (setq-local flycheck-highlighting-mode nil)
-  (setq-local flycheck-check-syntax-automatically nil))
+     (defun gagbo/flycheck-rtags-setup ()
+       (flycheck-select-checker 'rtags)
+       (setq-local flycheck-highlighting-mode nil)
+       (setq-local flycheck-check-syntax-automatically nil))
 
-(add-hook 'c-mode-common-hook 'gagbo/flycheck-rtags-setup)
-#+END_SRC
+     (add-hook 'c-mode-common-hook 'gagbo/flycheck-rtags-setup)
+   #+END_SRC
 
 ** Magit
-#+BEGIN_SRC emacs-lisp
-(use-package magit
-  :ensure t
-  :config
-  (use-package evil-magit
-    :ensure t))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :ensure t
+       :config
+       (use-package evil-magit
+         :ensure t))
+   #+END_SRC
 
 ** Projectile
-#+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-mode 1)
-  (use-package helm-projectile
-    :ensure t
-    :config
-    (helm-projectile-on)
-    )
-  )
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+       (projectile-mode 1)
+       (use-package helm-projectile
+         :ensure t
+         :config
+         (helm-projectile-on)
+         )
+       )
+   #+END_SRC
 
 ** Clang-format
-#+BEGIN_SRC emacs-lisp
-(use-package clang-format
-  :ensure t
-  :config
-  (require 'clang-format)
-  (global-set-key [M-=] 'clang-format-buffer)
-  )
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package clang-format
+       :ensure t
+       :config
+       (require 'clang-format)
+       (global-set-key [M-=] 'clang-format-buffer)
+       )
+   #+END_SRC
 
 ** CcMode
-#+BEGIN_SRC emacs-lisp
-(use-package cc-mode
-  :ensure t
-  :config
-  (setq c-basic-offset 4)
-  ;; Try Cmake-ide
-  (use-package cmake-ide
-    :ensure t
-    :config
-    (setq cmake-ide-flags-c '("-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
-    (setq cmake-ide-flags-c++ '("-I/usr/include/c++/7" "-I/usr/include/c++/7/x86_64-redhat-linux" "-I/usr/include/c++/7/backward" "-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
-    (cmake-ide-setup)
-    )
-  (define-key c-mode-map  [(tab)] 'company-complete)
-  (define-key c++-mode-map  [(tab)] 'company-complete)
-  )
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package cc-mode
+       :ensure t
+       :config
+       (setq c-basic-offset 4)
+       ;; Try Cmake-ide
+       (use-package cmake-ide
+         :ensure t
+         :config
+         (setq cmake-ide-flags-c '("-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
+         (setq cmake-ide-flags-c++ '("-I/usr/include/c++/7" "-I/usr/include/c++/7/x86_64-redhat-linux" "-I/usr/include/c++/7/backward" "-I/usr/lib/gcc/x86_64-redhat-linux/7/include" "-I/usr/local/include" "-I/usr/include"))
+         (cmake-ide-setup)
+         )
+       (define-key c-mode-map  [(tab)] 'company-complete)
+       (define-key c++-mode-map  [(tab)] 'company-complete)
+       )
+   #+END_SRC
 
 ** Elpy
-#+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :ensure t
-  :config
-  (elpy-enable)
-  (setq elpy-rpc-python-command "python3")
-  (setq elpy-rpc-backend "jedi")
-  (elpy-use-cpython "/usr/bin/python3")
-  (setq python-check-command "/usr/bin/pyflakes-3")
-  (add-hook 'python-mode-hook (
-                               lambda () (show-paren-mode 1))
-            )
-  )
+   #+BEGIN_SRC emacs-lisp
+     (use-package elpy
+       :ensure t
+       :config
+       (elpy-enable)
+       (setq elpy-rpc-python-command "python3")
+       (setq elpy-rpc-backend "jedi")
+       (elpy-use-cpython "/usr/bin/python3")
+       (setq python-check-command "/usr/bin/pyflakes-3")
+       (add-hook 'python-mode-hook (
+                                    lambda () (show-paren-mode 1))
+                 )
+       )
 
-(use-package sml-mode
-  :ensure t)
-#+END_SRC
+     (use-package sml-mode
+       :ensure t)
+   #+END_SRC
+** Yasnippet
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :config
+       (yas-global-mode)
+       )
+   #+END_SRC
