@@ -138,6 +138,11 @@
        :ensure t)
    #+END_SRC
 
+   Set custom theme directory in order to replicate Iceberg
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-theme-directory "~/.emacs.d/resources/themes")
+   #+END_SRC
+
 * Helm settings
 ** TODO Emulate :ls :split b using helm-mini
    The function =helm-mini-other-window= does not exist, so we should create
