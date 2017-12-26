@@ -347,7 +347,7 @@ Also new mappings are added on =gt= and =gT= for tags/references navigation.
   :ensure t
   :config
   (require 'clang-format)
-  (global-set-key [M-=] 'clang-format-region)
+  (global-set-key [M-=] 'clang-format-buffer)
   )
 #+END_SRC
 
