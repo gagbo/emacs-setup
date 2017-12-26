@@ -75,7 +75,7 @@
  '(button              ((t (:underline t))))
  '(link                ((t (:foreground "#95c4ce"))))
  '(link-visited        ((t (:foreground "#89b8c2"))))
- '(linum               ((t (:background "#161821" :foreground "#6b7089"))))
+ '(linum               ((t (:background "#1e2132" :foreground "#444b71"))))
  '(fringe              ((t (:background "#161821" :foreground "#d2d4de"))))
  '(header-line         ((t (:foreground "#FFFFFF"))))
  '(tooltip             ((t (:inherit variable-pitch
@@ -101,11 +101,11 @@
  '(font-lock-warning-face              ((t (:foreground "#e2a478" :weight bold))))
 
  ;; Mode line
- '(mode-line           ((t (:background "#b4be82" :foreground "#d2d4de" :height 0.95))))
- '(mode-line-buffer-id ((t (:foreground "#e9b189"))))
- '(mode-line-emphasis  ((t (:foreground "#FFFFFF" :slant italic))))
- '(mode-line-highlight ((t (:foreground "#c0ca8e"))))
- '(mode-line-inactive  ((t (:background "#161821" :foreground "#6b7089"))))
+ '(mode-line           ((t (:background "#818596" :foreground "#17171b" :height 0.95))))
+ '(mode-line-buffer-id ((t (:slant italic))))
+ '(mode-line-emphasis  ((t (:foreground "#d2d4de" :slant italic))))
+ '(mode-line-highlight ((t (:foreground "#e27878"))))
+ '(mode-line-inactive  ((t (:background "#0f1117" :foreground "#3e445e"))))
 
  ;; Search and replace
  '(isearch        ((t (:background "#6b7089" :foreground "#e2a478"))))
@@ -116,7 +116,19 @@
  '(query-replace  ((t (:inherit isearch))))
 
 
- ;; Powerline TODO
+ ;; Powerline
+ '(powerline-active0 ((t (:background "#818596" :foreground "#17171b"))))
+ '(powerline-active1 ((t (:background "#5a5f72" :foreground "#17171b"))))
+ '(powerline-active2 ((t (:background "#34394e" :foreground "#696d80"))))
+ '(powerline-inactive0 ((t (:background "#0f1117" :foreground "#3e445e"))))
+ '(powerline-inactive1 ((t (:background "#0f1117" :foreground "#3e445e"))))
+ '(powerline-inactive2 ((t (:background "#0f1117" :foreground "#3e445e"))))
+
+ ;; Powerline-evil
+ '(powerline-evil-insert-face ((t (:background "#84a0c6" :foreground "#161821"))))
+ '(powerline-evil-normal-face ((t (:background "#b4be82" :foreground "#161821"))))
+ '(powerline-evil-visual-face ((t (:background "#e2a478" :foreground "#161821"))))
+ '(powerline-evil-motion-face ((t (:background "#a093c7" :foreground "#161821"))))
 
  ;; Helm
  '(helm-buffer-directory    ((t (:foreground "#b4be82"))))
@@ -131,9 +143,7 @@
  '(helm-ff-symlink          ((t (:foreground "#95c4ce"))))
  '(helm-ff-invalid-symlink  ((t (:inherit helm-ff-symlink :underline (:style wave)))))
  '(helm-ff-prefix           ((t (:foreground "#e2a478"))))
- ;;'(helm-match               ((t (:inherit isearch))))
- ;;'(helm-match               ((t (:foreground ,(hex 65 65)))))
- ;;'(helm-match-item          ((t (:foreground ,(hex 108 66) :weight bold))))
+ '(helm-match               ((t (:inherit isearch))))
  '(helm-source-header       ((t (:foreground "#b4be82" :weight bold))))
  '(helm-selection           ((t (:inherit hl-line))))
  '(helm-selection-line      ((t (:inherit helm-selection

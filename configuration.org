@@ -107,6 +107,9 @@
 *** TODO Manage the flickering with auto-collape
     #+BEGIN_SRC emacs-lisp
       (use-package powerline
+        :init
+        (setq powerline-evil-tag-style "visual-expanded")
+        (setq powerline-arrow-shape 'curve)
         :ensure t
         :config
         (use-package powerline-evil
@@ -116,8 +119,7 @@
           :config
           (require 'spaceline-config)
           (spaceline-spacemacs-theme)
-          (spaceline-helm-mode)
-          (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+          (spaceline-helm-mode))
         )
     #+END_SRC
 
@@ -137,9 +139,12 @@
      (setq custom-theme-directory "~/.emacs.d/resources/themes")
    #+END_SRC
 
-   Use the local iceberg theme
+   Use the local iceberg theme.
+   The =powerline-reset= function has to be called in order to fix the
+   separators.
    #+BEGIN_SRC emacs-lisp
      (load-theme 'iceberg)
+     (powerline-reset)
    #+END_SRC
 
 * Helm settings
