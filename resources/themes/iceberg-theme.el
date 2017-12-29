@@ -151,12 +151,12 @@
                                           :background "#c6c8d1"))))
 
  ;; Company
- '(company-preview                       ((t (:foreground "#c6c8d1"
+ '(company-preview                       ((t (:foreground "#444b71"
                                                           :background "#161821"))))
  '(company-preview-common                ((t (:foreground "#c6c8d1"
                                                           :background "#161821"))))
- '(company-preview-search                ((t (:foreground "#c6c8d1"
-                                                          :background "#161821"))))
+ '(company-preview-search                ((t (:foreground "#444b71"
+                                                          :background "#1e2132"))))
  '(company-scrollbar-bg                  ((t (:background "#6b7089"))))
  '(company-scrollbar-fg                  ((t (:background "#d2d4de"))))
  '(company-tooltip                       ((t (:foreground "#c6c8d1"
