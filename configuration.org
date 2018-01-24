@@ -147,6 +147,12 @@
      (powerline-reset)
    #+END_SRC
 
+** Set Font
+   #+BEGIN_SRC emacs-lisp
+     (cond ((eq system-type 'windows-nt)
+            (set-face-attribute 'default nil :family "Consolas" :height 110)))
+   #+END_SRC
+
 * Helm settings
 ** TODO Emulate :ls :split b using helm-mini
    The function =helm-mini-other-window= does not exist, so we should create
