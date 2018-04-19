@@ -139,11 +139,13 @@
      (setq custom-theme-directory "~/.emacs.d/resources/themes")
    #+END_SRC
 
-   Use the local iceberg theme.
+   Use the Spacegray theme
    The =powerline-reset= function has to be called in order to fix the
    separators.
    #+BEGIN_SRC emacs-lisp
-     (load-theme 'iceberg)
+     (use-package spacegray-theme
+       :ensure t)
+     (load-theme 'spacegray t)
      (powerline-reset)
    #+END_SRC
 
