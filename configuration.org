@@ -63,6 +63,7 @@
 * Appearance // UI
 ** Display line number
    #+BEGIN_SRC emacs-lisp
+     (setq linum-format "%3d")
      (global-linum-mode t)
    #+END_SRC
 
