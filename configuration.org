@@ -413,7 +413,8 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (elpy-enable)
        (setq elpy-rpc-python-command "python3")
        (setq elpy-rpc-backend "jedi")
-       (elpy-use-cpython "/usr/bin/python3")
+       (setq python-shell-interpreter "python3")
+       (setq python-shell-interpreter-args "-i")
        (setq python-check-command "/usr/bin/pyflakes-3")
        (add-hook 'python-mode-hook (
                                     lambda () (show-paren-mode 1))
