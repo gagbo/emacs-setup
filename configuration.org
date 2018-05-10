@@ -153,7 +153,8 @@
    Current the font is properly set only if starting from Windows
    #+BEGIN_SRC emacs-lisp
      (cond ((eq system-type 'windows-nt)
-            (set-face-attribute 'default nil :family "Fira Code" :height 110)))
+            (set-face-attribute 'default nil :family "Fira Code" :height 110))
+            (t (set-face-attribute 'default nil :family "Fira Mono" :height 110)))
    #+END_SRC
 
 * Helm settings
