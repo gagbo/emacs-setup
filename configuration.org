@@ -139,13 +139,13 @@
      (setq custom-theme-directory "~/.emacs.d/resources/themes")
    #+END_SRC
 
-   Use the Spacegray theme
+   Use the Gruvbox theme
    The =powerline-reset= function has to be called in order to fix the
    separators.
    #+BEGIN_SRC emacs-lisp
-     (use-package spacegray-theme
+     (use-package gruvbox-theme
        :ensure t)
-     (load-theme 'spacegray t)
+     (load-theme 'gruvbox t)
      (powerline-reset)
    #+END_SRC
 
