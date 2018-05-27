@@ -124,7 +124,7 @@
         )
     #+END_SRC
 
-** Flycheck
+** Flycheck small tweak
    Enable the flycheck modifier of modeline
 
    #+BEGIN_SRC emacs-lisp
@@ -305,8 +305,15 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
      (use-package rtags
        :ensure t
        :config
+       (use-package helm-rtags
+         :ensure t)
+       (use-package company-rtags
+         :ensure t)
+
+       (setq rtags-autostart-diagnostics t)
        (setq rtags-completion-enabled t)
        (setq rtags-use-helm t)
+       (setq rtags-display-result-backend 'helm)
        )
 
      (evil-add-command-properties 'rtags-find-symbol-at-point :jump t)
@@ -330,7 +337,7 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        )
    #+END_SRC
 
-** Flycheck
+** Flycheck main part
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
        :ensure t
@@ -347,7 +354,7 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
 
      (defun gagbo/flycheck-rtags-setup ()
        (flycheck-select-checker 'rtags)
-       (setq-local flycheck-highlighting-mode nil)
+       (setq-local flycheck-highlighting-mode nil) ;; Rtags creates more accurate overlays
        (setq-local flycheck-check-syntax-automatically nil))
 
      (add-hook 'c-mode-common-hook 'gagbo/flycheck-rtags-setup)
