@@ -166,6 +166,10 @@
             (t (set-face-attribute 'default nil :family "Fira Mono" :height 110)))
    #+END_SRC
 
+** Project Drawer
+   The objective for this part is to set a proper Project drawer on the side
+   with easy navigation
+*** TODO choose a plugin for the emacs drawer (or Dired settings)
 * Helm settings
 ** TODO Emulate :ls :split b using helm-mini
    The function =helm-mini-other-window= does not exist, so we should create
