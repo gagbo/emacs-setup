@@ -37,6 +37,14 @@
      )
    #+END_SRC
 
+** Initial scratch message
+   Remind the user that the mapping to evaluate the command =eval-last-sexpr= is =^J=
+   #+BEGIN_SRC emacs-lisp
+     (setq initial-scratch-message ";; This buffer is for text that is not saved, and \
+     for Lisp evaluation.\n\
+     ;; To create a file, visit it with \\[find-file] and enter text in its buffer.\n\
+     ;; To evaluate an S-expr in this buffer, use \\[eval-print-last-sexp].\n\n")
+   #+END_SRC
 * Defaults
   These options set :
 - the inhibition of the startup message
