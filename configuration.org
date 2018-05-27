@@ -169,7 +169,27 @@
 ** Project Drawer
    The objective for this part is to set a proper Project drawer on the side
    with easy navigation
-*** TODO choose a plugin for the emacs drawer (or Dired settings)
+   #+BEGIN_SRC emacs-lisp
+     (use-package sr-speedbar
+       :ensure t
+       :init
+       (use-package speedbar
+         :ensure t)
+       :config
+       (setq sr-speedbar-width-x 50)
+       (setq sr-speedbar-width-console 50)
+       (setq sr-speedbar-max-width 65)
+       (setq sr-speedbar-skip-other-window-p t)
+       (setq sr-speedbar-auto-refresh t)
+       (global-set-key (kbd "<f8>") 'sr-speedbar-toggle)
+
+       (use-package projectile-speedbar
+         :ensure t
+         :config
+         (global-set-key (kbd "<f9>") 'projectile-speedbar-open-current-buffer-in-tree)
+         )
+       )
+   #+END_SRC
 * Helm settings
 ** TODO Emulate :ls :split b using helm-mini
    The function =helm-mini-other-window= does not exist, so we should create
