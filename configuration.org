@@ -510,8 +510,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        :config
        (use-package flycheck-clangcheck
          :ensure t)
-       (use-package flycheck-rust
-         :ensure t)
        (use-package flycheck-pyflakes
          :ensure t)
        (global-flycheck-mode))
@@ -647,12 +645,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
          (add-hook 'lsp-mode-hook 'lsp-ui-mode))
        (use-package company-lsp
          :ensure t)
-       (lsp-define-stdio-client
-          lsp-rust-mode
-          "rust"
-          (lambda () default-directory)
-          '("rls"))
-       (add-hook 'rust-mode #'lsp-rust-mode-enable)
      )
    #+END_SRC
 
