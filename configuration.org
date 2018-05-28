@@ -141,6 +141,26 @@
      (setq toe-highscore-file "~/.emacs.d/etc/toe.score")
    #+END_SRC
 
+** Utilities for =list-packages= menu
+   We add functions to filter the list by status (s new), or filter to
+   see only marked packages.
+   #+BEGIN_SRC emacs-lisp
+     (defun package-menu-find-marks ()
+       "Find packages marked for action in *Packages*."
+       (interactive)
+       (occur "^[A-Z"))
+
+     (defun package-menu-filter-by-status (status)
+       "Filter the *Packages* buffer by status."
+       (interactive
+        (list (completing-read
+               "Status : " '("new" "installed" "dependency" "obsolete"))))
+       (package-menu-filter (concat "status:" status)))
+
+     (define-key package-menu-mode-map "s" #'package-menu-filter-by-status)
+     (define-key package-menu-mode-map "a" #'package-menu-find-marks)
+   #+END_SRC
+
 * Org-mode
 ** Enable coloration
    #+BEGIN_SRC emacs-lisp
