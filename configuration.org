@@ -284,12 +284,12 @@
          :ensure t
          :config
          (setq speedbar-show-unknown-files t))
-       :config
        (setq sr-speedbar-width-x 50)
        (setq sr-speedbar-width-console 50)
        (setq sr-speedbar-max-width 65)
        (setq sr-speedbar-skip-other-window-p t)
        (setq sr-speedbar-auto-refresh t)
+       :config
        (global-set-key (kbd "<f8>") 'sr-speedbar-toggle)
 
        (use-package projectile-speedbar
