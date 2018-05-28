@@ -588,14 +588,13 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (setq python-shell-interpreter "python3")
        (setq python-shell-interpreter-args "-i")
        (setq python-check-command "/usr/bin/pyflakes-3")
-       (add-hook 'python-mode-hook (
-                                    lambda () (show-paren-mode 1))
-                 )
+       (add-hook 'python-mode-hook (lambda () (show-paren-mode 1)))
        )
 
      (use-package sml-mode
        :ensure t)
    #+END_SRC
+
 ** Yasnippet
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
