@@ -81,16 +81,104 @@
      (add-hook 'before-save-hook 'delete-trailing-whitespace)
    #+END_SRC
 
+** Open URLs with =xdg-open=
+   #+BEGIN_SRC emacs-lisp
+     (setq browse-url-browser-function 'browse-url-xdg-open)
+   #+END_SRC
+
+** Backup behaviour
+   We set up a separate folder, and also enable auto-pruning of old save
+   files.
+
+   Also, autosaves are kept in a separate folder to further de-clutter
+   the working directories
+   #+BEGIN_SRC emacs-lisp
+     (setq backup-directory-alist '((".*" . "~/.local/share/emacs/saves")))
+     (setq version-control t)
+     (setq delete-old-versions t)
+
+     (setq auto-save-list-file-prefix "~/.emacs.d/autosave/")
+     (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/autosave/" t)))
+   #+END_SRC
+
+** Save-place
+   Save the last position of point for every buffer
+   #+BEGIN_SRC emacs-lisp
+     (setq-default save-place t)
+     (setq save-place-file "~/.emacs.d/etc/saveplace")
+   #+END_SRC
+
+** Recentf
+   Save the list of recently accessed files
+   #+BEGIN_SRC emacs-lisp
+     (setq recentf-save-file "~/.emacs.d/etc/recentf"
+           recentf-max-saved-items 50)
+   #+END_SRC
+
+** Bookmark
+   #+BEGIN_SRC emacs-lisp
+     (setq bookmark-default-file "~/.emacs.d/etc/recentf")
+   #+END_SRC
+
+** Eldoc
+   Eldoc displays information about function signatures. Here we reduce
+   the delay
+   #+BEGIN_SRC emacs-lisp
+     (setq eldoc-idle-delay 0.1)
+   #+END_SRC
+
+** Documentation for elisp
+   We use =eldoc= for avoiding looking up the doc
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+   #+END_SRC
+
+** Typing of Emacs
+   We have to find out what it does, but it looks promising on
+   the quantified self field.
+   #+BEGIN_SRC emacs-lisp
+     (setq toe-highscore-file "~/.emacs.d/etc/toe.score")
+   #+END_SRC
+
+* Org-mode
+** Enable coloration
+   #+BEGIN_SRC emacs-lisp
+     (setq org-src-fontify-natively t)
+   #+END_SRC
+
+** todos list settings
+   #+BEGIN_SRC emacs-lisp
+     (setq org-enforce-todo-dependencies t
+           org-enforce-todo-checkbox-dependencies t)
+   #+END_SRC
+
+** Setup files
+   #+BEGIN_SRC emacs-lisp
+     (setq org-directory "~/org/"
+           org-agenda-files (list org-directory)
+           org-default-notes-file "~/org/inbox.org"
+           org-capture-templates
+           '(("n" "Note" entry (file+headline "~/org/inbox.org" "Inbox")
+                  "* TODO %<%Y-%m-%d %H:%M:%S>\n\n%?" :empty-lines 1)
+             ("p" "PW" entry (file+headline "~/org/pw.org" "PW")
+                  "* TODO %<%Y-%m-%d %H:%M:%S>\n\n%?" :empty-lines 1)
+             ("w" "Work" entry (file+datetree "~/org/work.org")
+                  "* %<%H:%M>\n\n%?" :empty-lines 1)
+             ("j" "Journal" entry (file+datetree "~/org/journal.org")
+                  "* %<%H:%M>\n\n%?" :empty-lines 1)))
+   #+END_SRC
+
+** Add export backends
+   #+BEGIN_SRC emacs-lisp
+     (setq org-export-backends '(ascii beamer html latex md))
+   #+END_SRC
+
+
 * Appearance // UI
 ** Display line number
    #+BEGIN_SRC emacs-lisp
      (setq linum-format "%3d")
      (global-linum-mode t)
-   #+END_SRC
-
-** Enable coloration in Org-mode
-   #+BEGIN_SRC emacs-lisp
-     (setq org-src-fontify-natively t)
    #+END_SRC
 
 ** Set Frame title
