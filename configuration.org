@@ -599,6 +599,8 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
        :ensure t
+       :init
+       (setq yas-snippet-dirs '("~/.emacs.d/snippets/"))
        :config
        (yas-global-mode)
        )
