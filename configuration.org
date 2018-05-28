@@ -57,18 +57,23 @@
   These options set :
 - the inhibition of the startup message
 - the use of space for indent
-- the backup behaviour (with a unique folder)
 - useful flags for dired
+- the startup message in the echo area
+- the timeout until displaying part of a binding in echo area
 
 #+BEGIN_SRC emacs-lisp
   (savehist-mode 1)
+  (setq savehist-file "~/.emacs.d/etc/savehist"
+        history-length 150)
   (setq inhibit-default-init t
         inhibit-startup-message t)
   (setq-default indent-tabs-mode nil)
   (setq-default scroll-step 5
                 scroll-conservatively 25)
-  (setq backup-directory-alist '(("." . "~/.local/share/emacs/saves")))
   (setq-default dired-listing-switches "-alh")
+  (defun display-startup-echo-area-message ()
+    (message "Startup successful !"))
+  (setq echo-keystrokes 0.5)
 #+END_SRC
 
 ** Remove the trailing whitespaces on save
