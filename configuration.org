@@ -65,6 +65,7 @@
   (savehist-mode 1)
   (setq savehist-file "~/.emacs.d/etc/savehist"
         history-length 150)
+  (setq evil-want-integration nil)
   (setq inhibit-default-init t
         inhibit-startup-message t)
   (setq-default indent-tabs-mode nil)
@@ -364,6 +365,8 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
    #+BEGIN_SRC emacs-lisp
      (use-package evil
        :ensure t
+       :init
+       (setq evil-want-integration nil)
        :config
        (evil-mode 1)
        (use-package evil-leader
@@ -424,6 +427,16 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (define-key evil-ex-search-keymap "\C-r" 'evil-paste-from-register)
        (setq evil-search-module 'evil-search)
        )
+
+     (use-package evil-collection
+       :after evil
+       :ensure t
+       :config
+       (setq evil-collection-mode-list nil)
+       (add-to-list 'evil-collection-mode-list 'company)
+       (add-to-list 'evil-collection-mode-list 'helm)
+       (add-to-list 'evil-collection-mode-list 'magit)
+       (evil-collection-init))
    #+END_SRC
 
 ** Exchange the roles of : and ;
