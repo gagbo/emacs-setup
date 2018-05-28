@@ -447,6 +447,8 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (use-package org-evil
          :ensure t)
 
+       (define-key evil-normal-state-map "gt" 'xref-find-definitions)
+       (define-key evil-normal-state-map "gT" 'xref-find-references)
        (define-key evil-normal-state-map [escape] 'keyboard-quit)
        (define-key evil-visual-state-map [escape] 'keyboard-quit)
        (define-key evil-ex-map "term" 'ansi-term )
@@ -648,8 +650,12 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
    #+END_SRC
 
    And then, Cquery is installed separately. Note : =M-x lsp-cquery-enable=
-   calls =lsp-mode= for us
+   calls =lsp-mode= for us.
    #+BEGIN_SRC emacs-lisp
+     (defun cquery//enable ()
+      (condition-case nil
+       (lsp-cquery-enable)
+       (user-error nil)))
      (use-package cquery
        :ensure t
        :init
@@ -657,6 +663,8 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (setq cquery-extra-args '("--log-file=/tmp/cq.log"))
        (setq cquery-cache-dir "/home/gagbo/.cache/cquery")
        (setq cquery-sem-highlight-method 'font-lock)
+       (setq cquery-extra-init-params '(:completion (:detailedLabel t)))
+       (add-hook 'c-mode-common-hook #'cquery//enable)
        :config
        (define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
        (define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward)
