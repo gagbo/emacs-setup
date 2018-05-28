@@ -513,6 +513,10 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (add-hook 'after-init-hook 'global-company-mode)
        (setq company-backends (delete 'company-semantic company-backends))
        (add-to-list 'company-backends 'company-rtags)
+       (add-to-list 'company-backends 'company-lsp)
+       (setq company-transformers nil
+             company-lsp-async t
+             company-lsp-cache-candidates nil)
        )
    #+END_SRC
 
@@ -669,6 +673,54 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
         '((my-create-newline-and-enter-sexp "RET")))
        (sp-local-pair 'java-mode "{" nil :post-handlers
         '((my-create-newline-and-enter-sexp "RET"))))
+   #+END_SRC
+
+** LSP mode / CQuery
+   LSP-mode is installed to work with most servers
+   #+BEGIN_SRC emacs-lisp
+     (use-package lsp-mode
+       :ensure t
+       :config
+       (use-package lsp-ui
+         :ensure t
+         :config
+         (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+       (use-package company-lsp
+         :ensure t)
+       (lsp-define-stdio-client
+          lsp-rust-mode
+          "rust"
+          (lambda () default-directory)
+          '("rls"))
+       (add-hook 'rust-mode #'lsp-rust-mode-enable)
+     )
+   #+END_SRC
+
+   And then, Cquery is installed separately. Note : =M-x lsp-cquery-enable=
+   calls =lsp-mode= for us
+   #+BEGIN_SRC emacs-lisp
+     (use-package cquery
+       :ensure t
+       :init
+       (setq cquery-executable "/home/gagbo/soft/cquery/build/release/bin/cquery")
+       (setq cquery-extra-args '("--log-file=/tmp/cq.log"))
+       (setq cquery-cache-dir "/home/gagbo/.cache/cquery")
+       (setq cquery-sem-highlight-method 'font-lock)
+       :config
+       (define-key evil-normal-state-map (kbd "C-p") 'lsp-ui-peek-jump-forward)
+       (define-key evil-normal-state-map (kbd "C-t") 'lsp-ui-peek-jump-backward)
+       (use-package helm-xref
+         :ensure t
+         :config
+         (setq xref-show-xrefs-function 'helm-xref-show-xrefs))
+       )
+   #+END_SRC
+
+   We can use the extensions that cquery give to LSP using lsp-ui candy
+   #+BEGIN_SRC emacs-lisp
+     ;; (lsp-ui-peek-find-custom 'base "$cquery/base")
+     ;; (lsp-ui-peek-find-custom 'callers "$cquery/callers")
+     ;; (lsp-ui-peek-find-custom 'random "$cquery/random")
    #+END_SRC
 
 ** MTC scripts
