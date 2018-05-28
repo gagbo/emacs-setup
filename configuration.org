@@ -473,12 +473,30 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
      (use-package company
        :ensure t
        :config
-       (setq company-idle-time 0.1)
+       (setq company-idle-time 0.1
+             company-minimum-prefix-length 3
+             company-selection-wrap-around t
+             company-show-numbers t
+             company-require-match 'never)
        (add-hook 'after-init-hook 'global-company-mode)
        (setq company-backends (delete 'company-semantic company-backends))
        (add-to-list 'company-backends 'company-rtags)
        )
    #+END_SRC
+
+   Also, use wasamasa's workaround for the Esc key when completion is active
+    #+BEGIN_SRC emacs-lisp
+        (defun my-company-abort ()
+         (interactive)
+         (company-abort)
+         (when (and (bound-and-true-p evil-mode)
+                (eq evil-state 'insert))
+          (evil-force-normal-state)))
+
+        (with-eval-after-load 'company
+         (define-key company-active-map (kbd "<escape>") 'my-company-abort)
+         (define-key company-search-map (kbd "<escape>") 'company-search-abort))
+    #+END_SRC
 
 ** Flycheck main part
    #+BEGIN_SRC emacs-lisp
