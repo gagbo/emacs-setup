@@ -606,6 +606,29 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        )
    #+END_SRC
 
+** Smartparens
+   Let's work on RSI, one pair at a time
+   #+BEGIN_SRC emacs-lisp
+     (defun my-create-newline-and-enter-sexp (&rest _ignored)
+       "Open a new brace or bracket expression, with relevant newlines and indent."
+       (newline)
+       (indent-according-to-mode)
+       (forward-line -1)
+       (indent-according-to-mode))
+
+     (use-package smartparens
+       :ensure t
+       :init
+       (setq sp-show-pair-from-inside t)
+       (setq sp-autoescape-string-quote nil)
+       :config
+       (require 'smartparens-config)
+       (sp-local-pair 'c-mode "{" nil :post-handlers
+        '((my-create-newline-and-enter-sexp "RET")))
+       (sp-local-pair 'java-mode "{" nil :post-handlers
+        '((my-create-newline-and-enter-sexp "RET"))))
+   #+END_SRC
+
 ** MTC scripts
    I built a custom major mode for the markup language used to communicate
    with the simulation software in the lab.
