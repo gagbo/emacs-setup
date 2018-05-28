@@ -638,6 +638,16 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        )
    #+END_SRC
 
+** Markdown
+   #+BEGIN_SRC emacs-lisp
+     (use-package markdown-mode
+      :ensure t
+      :mode (("README\\.md\\'" . gfm-mode)
+          ("\\.md\\'" . markdown-mode)
+          ("\\.markdown\\'" . markdown-mode))
+      :init (setq markdown-command "multimarkdown"))
+   #+END_SRC
+
 ** Smartparens
    Let's work on RSI, one pair at a time
    #+BEGIN_SRC emacs-lisp
