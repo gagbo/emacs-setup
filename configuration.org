@@ -24,6 +24,13 @@
        (require 'cl))
    #+END_SRC
 
+** Inhibit =custom= writing to init file
+   To make it work the =custom-set-variables= calls should be moved too.
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-file "~/.emacs.d/etc/custom.el")
+     (load custom-file)
+   #+END_SRC
+
 ** Diminish
    Reduces the clutter in the modeline. It is loaded early because use-package
    supports diminish in its command.
