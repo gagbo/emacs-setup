@@ -476,3 +476,22 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (yas-global-mode)
        )
    #+END_SRC
+
+** MTC scripts
+   I built a custom major mode for the markup language used to communicate
+   with the simulation software in the lab.
+
+   I started making a ftplugin in vim, but creating a proper compiler plugin
+   in vimscript seems a lot harder than in elisp. And on top of this, Emacs
+   seems created to build easy REPLs anyway (and Evil is working)
+
+   The following code checks for the existence of the =mtc-mode.el= script,
+   and sets things up accordingly if found
+
+   #+BEGIN_SRC emacs-lisp
+     (cond ((file-readable-p (expand-file-name "mtc-mode.el" user-init-dir))
+            (progn
+             (load-file (expand-file-name "mtc-mode.el" user-init-dir))
+             (add-to-list 'auto-mode-alist '("\\.mtc\\'" . mtc-mode))))
+           (t ()))
+   #+END_SRC
