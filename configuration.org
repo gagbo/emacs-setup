@@ -561,6 +561,9 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        :ensure t
        :config
        (setq c-basic-offset 4)
+       (setq c-default-style '((java-mode . "java")
+                               (awk-mode . "awk")
+                               (c-mode . "user")))
        ;; Try Cmake-ide
        (use-package cmake-ide
          :ensure t
