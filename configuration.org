@@ -105,7 +105,7 @@
 ** Save-place
    Save the last position of point for every buffer
    #+BEGIN_SRC emacs-lisp
-     (setq-default save-place t)
+     (save-place-mode 1)
      (setq save-place-file "~/.emacs.d/etc/saveplace")
    #+END_SRC
 
