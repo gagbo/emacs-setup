@@ -470,36 +470,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
    #+END_SRC
 
 * The rest
-** RTags
-   There are a few tricks to integrate rtags properly into evil. Most notably,
-   =rtags-find-{symbol,references}-at-point= are made "jumps" so evil adds properly
-   the points to the jump list for easy navigation.
-
-   Also new mappings are added on =gt= and =gT= for tags/references navigation.
-   #+BEGIN_SRC emacs-lisp
-     (use-package rtags
-       :ensure t
-       :config
-       (use-package helm-rtags
-         :ensure t)
-       (use-package company-rtags
-         :ensure t)
-
-       (setq rtags-autostart-diagnostics t)
-       (setq rtags-completion-enabled t)
-       (setq rtags-use-helm t)
-       (setq rtags-display-result-backend 'helm)
-       )
-
-     (evil-add-command-properties 'rtags-find-symbol-at-point :jump t)
-     (evil-add-command-properties 'rtags-find-references-at-point :jump t)
-
-     (add-hook 'c-mode-common-hook (lambda()
-       (define-key evil-normal-state-map (kbd "gt") 'rtags-find-symbol-at-point)))
-     (add-hook 'c-mode-common-hook (lambda()
-       (define-key evil-normal-state-map (kbd "gT") 'rtags-find-references-at-point)))
-   #+END_SRC
-
 ** Company
    #+BEGIN_SRC emacs-lisp
      (use-package company
@@ -512,7 +482,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
              company-require-match 'never)
        (add-hook 'after-init-hook 'global-company-mode)
        (setq company-backends (delete 'company-semantic company-backends))
-       (add-to-list 'company-backends 'company-rtags)
        (add-to-list 'company-backends 'company-lsp)
        (setq company-transformers nil
              company-lsp-async t
@@ -539,8 +508,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
      (use-package flycheck
        :ensure t
        :config
-       (use-package flycheck-rtags
-         :ensure t)
        (use-package flycheck-clangcheck
          :ensure t)
        (use-package flycheck-rust
@@ -548,13 +515,6 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (use-package flycheck-pyflakes
          :ensure t)
        (global-flycheck-mode))
-
-     (defun gagbo/flycheck-rtags-setup ()
-       (flycheck-select-checker 'rtags)
-       (setq-local flycheck-highlighting-mode nil) ;; Rtags creates more accurate overlays
-       (setq-local flycheck-check-syntax-automatically nil))
-
-     (add-hook 'c-mode-common-hook 'gagbo/flycheck-rtags-setup)
    #+END_SRC
 
 ** Magit
