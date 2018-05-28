@@ -174,7 +174,9 @@
        :ensure t
        :init
        (use-package speedbar
-         :ensure t)
+         :ensure t
+         :config
+         (setq speedbar-show-unknown-files t))
        :config
        (setq sr-speedbar-width-x 50)
        (setq sr-speedbar-width-console 50)
