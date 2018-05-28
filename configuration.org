@@ -45,7 +45,15 @@
      ;; To create a file, visit it with \\[find-file] and enter text in its buffer.\n\
      ;; To evaluate an S-expr in this buffer, use \\[eval-print-last-sexp].\n\n")
    #+END_SRC
-* Defaults
+
+** Initial buffer
+   Let's use a notes file instead of the scratch buffer to start emacs
+   #+BEGIN_SRC emacs-lisp
+     (setq remember-notes-initial-major-mode 'org-mode)
+     (setq initial-buffer-choice 'remember-notes)
+   #+END_SRC
+
+* Defaults / General
   These options set :
 - the inhibition of the startup message
 - the use of space for indent
