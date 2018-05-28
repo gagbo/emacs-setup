@@ -174,7 +174,6 @@
      (setq org-export-backends '(ascii beamer html latex md))
    #+END_SRC
 
-
 * Appearance // UI
 ** Display line number
    #+BEGIN_SRC emacs-lisp
