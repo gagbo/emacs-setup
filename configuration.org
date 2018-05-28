@@ -249,6 +249,12 @@
      (setq custom-theme-directory "~/.emacs.d/resources/themes")
    #+END_SRC
 
+   Make custom themes safe so the daemon doesn't hang later if we
+   modify something
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-safe-themes t)
+   #+END_SRC
+
    Use the Gruvbox theme
    The =powerline-reset= function has to be called in order to fix the
    separators.
