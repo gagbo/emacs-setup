@@ -46,6 +46,8 @@
 
 ** Initial scratch message
    Remind the user that the mapping to evaluate the command =eval-last-sexpr= is =^J=
+   This initial scratch message won't show with the choice to use the
+   *notes* buffer for the initial buffer.
    #+BEGIN_SRC emacs-lisp
      (setq initial-scratch-message ";; This buffer is for text that is not saved, and \
      for Lisp evaluation.\n\
@@ -62,25 +64,23 @@
 
 * Defaults / General
   These options set :
-- the inhibition of the startup message
+- The evil-integration option for evil-collection
+- the inhibition of GNU advertisement
+- the startup message in the echo area
 - the use of space for indent
 - useful flags for dired
-- the startup message in the echo area
 - the timeout until displaying part of a binding in echo area
 
 #+BEGIN_SRC emacs-lisp
-  (savehist-mode 1)
-  (setq savehist-file "~/.emacs.d/etc/savehist"
-        history-length 150)
   (setq evil-want-integration nil)
   (setq inhibit-default-init t
         inhibit-startup-message t)
+  (defun display-startup-echo-area-message ()
+    (message "Startup successful !"))
   (setq-default indent-tabs-mode nil)
   (setq-default scroll-step 5
                 scroll-conservatively 25)
   (setq-default dired-listing-switches "-alh")
-  (defun display-startup-echo-area-message ()
-    (message "Startup successful !"))
   (setq echo-keystrokes 0.5)
 #+END_SRC
 
@@ -92,6 +92,15 @@
 ** Open URLs with =xdg-open=
    #+BEGIN_SRC emacs-lisp
      (setq browse-url-browser-function 'browse-url-xdg-open)
+   #+END_SRC
+
+** Save hist
+   We set up a separate folder for the history, and also raise the history
+   size
+   #+BEGIN_SRC emacs-lisp
+     (savehist-mode 1)
+     (setq savehist-file "~/.emacs.d/etc/savehist"
+           history-length 150)
    #+END_SRC
 
 ** Backup behaviour
