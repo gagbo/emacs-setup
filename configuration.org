@@ -150,13 +150,6 @@
      (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
    #+END_SRC
 
-** Typing of Emacs
-   We have to find out what it does, but it looks promising on
-   the quantified self field.
-   #+BEGIN_SRC emacs-lisp
-     (setq toe-highscore-file "~/.emacs.d/etc/toe.score")
-   #+END_SRC
-
 ** Utilities for =list-packages= menu
    We add functions to filter the list by status (s new), or filter to
    see only marked packages.
@@ -268,16 +261,6 @@
           (spaceline-helm-mode))
         )
     #+END_SRC
-
-** Flycheck small tweak
-   Enable the flycheck modifier of modeline
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package flycheck-color-mode-line
-       :ensure t
-       :config
-       (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
-   #+END_SRC
 
 ** Theme
    Set custom theme directory in order to replicate Iceberg
@@ -526,6 +509,10 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
      (use-package flycheck
        :ensure t
        :config
+       (use-package flycheck-color-mode-line
+         :ensure t
+         :config
+         (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
        (use-package flycheck-clangcheck
          :ensure t)
        (use-package flycheck-pyflakes
