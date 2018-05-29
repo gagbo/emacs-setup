@@ -1,7 +1,7 @@
 #+TITLE: Emacs Configuration
 #+AUTHOR: Gerry Agbobada
 #+EMAIL: gagbobada+git@gmail.com
-#+OPTIONS: toc:nil num:nil
+#+OPTIONS: toc:2 num:nil
 
 * Set personal information
   Define some variables that may be useful later
