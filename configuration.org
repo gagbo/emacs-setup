@@ -588,13 +588,17 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
    #+END_SRC
 
 ** Yasnippet
+   Now that Yasnippet does not bundle snippets anymore, we also load the
+   =yasnippet-snippets= package, which appends its bundle to =yas-snippet-dirs=
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
        :ensure t
        :init
        (setq yas-snippet-dirs '("~/.emacs.d/snippets/"))
        :config
-       (yas-global-mode)
+       (use-package yasnippet-snippets
+         :ensure t)
+       (yas-global-mode 1)
        )
    #+END_SRC
 
