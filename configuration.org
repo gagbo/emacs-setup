@@ -496,6 +496,7 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
        (add-hook 'after-init-hook 'global-company-mode)
        (setq company-backends (delete 'company-semantic company-backends))
        (add-to-list 'company-backends 'company-lsp)
+       (add-to-list 'company-backends 'company-auctex)
        (setq company-transformers nil
              company-lsp-async t
              company-lsp-cache-candidates nil)
