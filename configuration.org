@@ -59,6 +59,7 @@
    Let's use a notes file instead of the scratch buffer to start emacs
    #+BEGIN_SRC emacs-lisp
      (setq remember-notes-initial-major-mode 'org-mode)
+     (setq remember-data-file "~/org/notes.org")
      (setq initial-buffer-choice 'remember-notes)
    #+END_SRC
 
@@ -177,9 +178,34 @@
    #+END_SRC
 
 ** todos list settings
+   Remainder : the functions I want to use are =(org-toggle-checkbox)= and
+=(org-todo)=. In order to get the nice progress in the title of the items,
+I should add =[/]= or =[%]= as cookies in the title of the main item
+
+   These settings prevents turning a TODO to DONE while there are still
+tasks to do in the children of the tree
    #+BEGIN_SRC emacs-lisp
      (setq org-enforce-todo-dependencies t
            org-enforce-todo-checkbox-dependencies t)
+   #+END_SRC
+
+  This setting logs the time at which an item was marked as done, and also
+prompts for a note  that will be added as a closing note. Another option is
+to use ='time= to get only the timestamp.
+
+I use time to begin with because I will probably cycle a lot between states
+until I am at ease with the different workflow states
+   #+BEGIN_SRC emacs-lisp
+     ; (setq org-log-done 'note)
+     (setq org-log-done        'time
+           org-log-into-drawer t)
+   #+END_SRC
+
+  This setting sets the different workflow states
+   #+BEGIN_SRC emacs-lisp
+     (setq org-todo-keywords
+       '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELED(c)")
+         (sequence "REPORT" "BUG" "KNOWNCAUSE" "|" "FIXED")))
    #+END_SRC
 
 ** Setup files
@@ -407,8 +433,8 @@ If fuzzy everywhere is slow, use =helm-candidate-number-limit=
          (evil-leader/set-key
            "e" 'projectile-find-file
            "x" 'helm-M-x
+           "b" 'helm-buffers-list
            "pf" 'helm-projectile
-           "bd" 'kill-buffer-and-window
            "gs" 'magit-status
            "ne" 'flycheck-next-error
            "pe" 'flycheck-previous-error
